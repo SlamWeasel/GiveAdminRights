@@ -18,9 +18,9 @@ namespace RichtlinienCheck_File
             //Console.SetWindowSize(50, 10);
             //Console.SetBufferSize(50, 10);
             string[] paths = new string[]{      //Eingabe des Ordners, den man auf die Berechtigungen überprüfen will!
-                            @"\\nt-file\home"/*$\" + user + @"\Documents",
-                            @"\\nt-file\home$\" + Environment.UserName + @"\Eigene Dateien",
-                            @"\\nt-file\home$\" + Environment.UserName + @"\Anwendungsdateien"*/
+                            @"\\server\home"/*$\" + user + @"\Documents",
+                            @"\\server\home$\" + Environment.UserName + @"\Eigene Dateien",
+                            @"\\server\home$\" + Environment.UserName + @"\Anwendungsdateien"*/
                         };
 
             /*Console.WriteLine(  "\n=======================================================\n" +
