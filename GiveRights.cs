@@ -58,12 +58,12 @@ namespace RichtlinienCheck_File
                     DirectoryInfo di = new DirectoryInfo(path);
                     DirectorySecurity acl = di.GetAccessControl();
                     AuthorizationRuleCollection rules = acl.GetAccessRules(true, true, typeof(NTAccount));
-                    IdentityReference netAdmin = new NTAccount(@"FIXEMER-GROUP\Administrator");
+                    IdentityReference netAdmin = new NTAccount(@"...");
 
                     //Prüfen, ob Netzadministartor Berechtigungen hat
                     bool AdminIsIn = false;
                     /*foreach (AuthorizationRule rule in rules)
-                        if (rule.IdentityReference.ToString().Equals(@"FIXEMER-GROUP\Administrator"))
+                        if (rule.IdentityReference.ToString().Equals(@"..."))
                             AdminIsIn = true; //Setzt den Wert auf Wahr, sobald der Administrator gefunden wird*/
 
                     if(acl.GetOwner(typeof(SecurityIdentifier)).ToString() != netAdmin.ToString())
@@ -84,8 +84,8 @@ namespace RichtlinienCheck_File
                     if (!AdminIsIn)
                     {
                         //Vergibt die Berechtigungen an den Netzadmin
-                        acl.AddAccessRule(new FileSystemAccessRule(@"FIXEMER-GROUP\Administrator", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit, PropagationFlags.InheritOnly, AccessControlType.Allow));
-                        acl.AddAccessRule(new FileSystemAccessRule(@"FIXEMER-GROUP\Administrator", FileSystemRights.FullControl, InheritanceFlags.ObjectInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+                        acl.AddAccessRule(new FileSystemAccessRule(@"...", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit, PropagationFlags.InheritOnly, AccessControlType.Allow));
+                        acl.AddAccessRule(new FileSystemAccessRule(@"...", FileSystemRights.FullControl, InheritanceFlags.ObjectInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
 
 
                         di.SetAccessControl(acl);
@@ -106,14 +106,14 @@ namespace RichtlinienCheck_File
                 }
                 catch (Exception ex)
                 {
-                    if(!File.Exists(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt"))
-                        File.WriteAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
+                    if(!File.Exists(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt"))
+                        File.WriteAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
                                         System.DateTime.Now.ToString() + "\n" +
                                         "Fehler beim Vergeben der Rechte!\n\n" + ex.ToString());
                     else
                     {
-                        string priorTxt = File.ReadAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt");
-                        File.WriteAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
+                        string priorTxt = File.ReadAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt");
+                        File.WriteAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
                                         priorTxt + "\n\n\n\n" +
                                         System.DateTime.Now.ToString() + "\n" +
                                         "Fehler beim Vergeben der Rechte!\n\n" + ex.ToString());
@@ -152,7 +152,7 @@ namespace RichtlinienCheck_File
             {
                 DirectoryInfo di = new DirectoryInfo(path);
                 DirectorySecurity acl = di.GetAccessControl();
-                IdentityReference netAdmin = new NTAccount(@"FIXEMER-GROUP\Administrator");
+                IdentityReference netAdmin = new NTAccount(@"...");
 
                 acl.AddAccessRule(new FileSystemAccessRule(netAdmin, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit, PropagationFlags.InheritOnly, AccessControlType.Allow));
                 acl.AddAccessRule(new FileSystemAccessRule(netAdmin, FileSystemRights.FullControl, InheritanceFlags.ObjectInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
@@ -164,14 +164,14 @@ namespace RichtlinienCheck_File
             }
             catch(Exception exep)
             {
-                if (!File.Exists(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt"))
-                    File.WriteAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
+                if (!File.Exists(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt"))
+                    File.WriteAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
                                        System.DateTime.Now.ToString() + "\n" +
                                        "Fehler beim Vergeben der Rechte bei Unterverzeichnis " + path + "\n\n" + exep.ToString());
                 else
                 {
-                    string priorTxt = File.ReadAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt");
-                    File.WriteAllText(@"\\nt-profile\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
+                    string priorTxt = File.ReadAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt");
+                    File.WriteAllText(@"\\server\ErrorLogs\AdminAccesErrorLog-" + user + ".txt",
                                       priorTxt +"\n\n\n\n" +
                                       System.DateTime.Now.ToString() + "\n" +
                                       "Fehler beim Vergeben der Rechte bei Unterverzeichnis " + path + "\n\n" + exep.ToString());
